@@ -1,0 +1,38 @@
+<header class="site-header">
+    <div class="wrapper">
+        {%- assign default_paths = site.pages | map: "path" -%}
+        {%- assign page_paths = site.minima.nav_pages | default: default_paths -%}
+        {%- assign page_titles = site.pages | map: 'title' | compact %}
+        <a class="site-title" rel="author" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+
+        <nav class="site-nav" aria-label="Alternate languages">
+            View this page in: 
+            {% for alt in site.alternates %}
+                {% if alt.lang == site.lang %}
+                    {% if page.lang and page.lang != site.lang %}
+                        <a href="{{ site.url }}{{ page.url | replace: page.lang, '' }}" hreflang="{{ alt.lang }}">{{ alt.lang }}</a>{% unless forloop.last %} | {% endunless %}
+                    {% else %}
+                        <a href="{{ site.url }}{{ page.url }}" hreflang="{{ alt.lang }}">{{ alt.lang }}</a>{% unless forloop.last %} | {% endunless %}
+                    {% endif %}
+                {% else %}
+                    {% if page.lang and page.lang != site.lang %}
+                        <a href="{{ site.url }}{{ page.url | replace: page.lang, alt.lang }}" hreflang="{{ alt.lang }}">{{ alt.lang }}</a>{% unless forloop.last %} | {% endunless %}
+                    {% else %}
+                        <a href="{{ site.url }}/{{ alt.lang }}{{ page.url }}" hreflang="{{ alt.lang }}">{{ alt.lang }}</a>{% unless forloop.last %} | {% endunless %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </nav>
+
+        {%- unless page_titles == empty %}
+            <nav class="site-nav">
+                <input type="checkbox" id="nav-trigger" />
+                <label for="nav-trigger">
+                    <span class="menu-icon"></span>
+                </label>
+
+                {% include nav-items.html paths = page_paths %}
+            </nav>
+        {%- endunless %}
+    </div>
+</header>
