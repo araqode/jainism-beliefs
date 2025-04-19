@@ -1,0 +1,7 @@
+{% for alt in site.alternates %}
+    {% if page.lang and page.lang != site.lang %}
+        <link rel="alternate" hreflang="{{ alt.lang }}" href="{{ site.url }}{{ page.url | replace: page.lang, alt.lang }}" />
+    {% else %}
+        <link rel="alternate" hreflang="{{ alt.lang }}" href="{{ site.url }}{{ alt.lang }}{{ page.url }}" />
+    {% endif %}
+{% endfor %}
